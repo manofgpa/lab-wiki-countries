@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CountryDetails } from './CountryDetails';
 
-export const CountriesList = ({ data }) => {
+export const CountriesList = ({ countries }) => {
   const [hover, setHover] = useState();
 
   const hoverCountry = (e) => {
@@ -11,25 +10,25 @@ export const CountriesList = ({ data }) => {
 
   return (
     <div className="col-5" style={{ maxHeight: '90vh', overflow: 'scroll' }}>
-      <ul className="list-group">
-        {data.map((country) => (
-          <Link to={`/${country.cca3}`}>
-            <li
-              className={
-                hover === `${country.flag} ${country.name.common}`
-                  ? 'list-group-item active'
-                  : 'list-group-item'
-              }
-              onMouseEnter={(e) => hoverCountry(e)}
-              key={country.name.common}
-            >
-              <>
+      {countries && (
+        <ul className="list-group">
+          {countries.map((country) => (
+            <Link to={`/${country.cca3}`}>
+              <li
+                className={
+                  hover === `${country.flag} ${country.name.common}`
+                    ? 'list-group-item active'
+                    : 'list-group-item'
+                }
+                onMouseEnter={(e) => hoverCountry(e)}
+                key={country.name.common}
+              >
                 {country.flag} {country.name.common}
-              </>
-            </li>
-          </Link>
-        ))}
-      </ul>
+              </li>
+            </Link>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
