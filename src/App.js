@@ -1,20 +1,19 @@
 
-import { Routes, Route, Link } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import { CountriesList } from './components/CountriesList'
 import { CountryDetails } from './components/CountryDetails'
 import { Navbar } from './components/Navbar'
-import data from './countries.json'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 function App() {
-  const [countries, setCountries] = useState(data)
+  const [countries, setCountries] = useState([])
 
   useEffect(() => {
     (async () => {
       try {
         const response = await axios.get('https://restcountries.com/v3.1/all')
-        setCountries(response.data)
+        setCountries(response.data.sort((a, b) => a.name.common < b.name.common ? -1 : 1))
       } catch (err) {
         console.log(err)
       }

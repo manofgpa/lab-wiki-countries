@@ -13,7 +13,7 @@ export const CountriesList = ({ countries }) => {
       {countries && (
         <ul className="list-group">
           {countries.map((country) => (
-            <Link to={`/${country.cca3}`}>
+            <Link key={country.cca3} to={`/${country.cca3}`}>
               <li
                 className={
                   hover === `${country.flag} ${country.name.common}`

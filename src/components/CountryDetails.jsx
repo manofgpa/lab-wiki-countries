@@ -1,20 +1,13 @@
 import { Link, useParams } from 'react-router-dom';
 import data from '../countries.json';
-import { useState, useEffect } from 'react';
 
 export const CountryDetails = () => {
-  // const [country, setCountry] = useState();
-
   const params = useParams();
 
   const getCountryByCca3 = (code) => {
     return data.find((country) => country.cca3 === code);
   };
   const country = getCountryByCca3(params.cca3);
-
-  // useEffect(() => {
-  //   setCountry(data.find((country) => country.cca3 === params.cca3));
-  // }, [params]);
 
   return (
     <div className="col-7">
@@ -26,10 +19,9 @@ export const CountryDetails = () => {
             <td style={{ width: '30%' }}>
               {country.capital.length > 1 ? 'Capitals' : 'Capital'}
             </td>
+            {!country.capital.length && <td>None</td>}
             {country.capital.map((capital) => (
-              <>
-                <td key={capital}>{capital}</td>
-              </>
+              <td key={capital}>{capital}</td>
             ))}
           </tr>
           <tr>
@@ -43,6 +35,7 @@ export const CountryDetails = () => {
             <td>Borders</td>
             <td>
               <ul>
+                {country.borders.length === 0 && <li>None</li>}
                 {country.borders.map((border) => (
                   <li key={border}>
                     <Link to={`/${border}`}>
